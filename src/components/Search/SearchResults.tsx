@@ -7,7 +7,9 @@ import { fetchSearchResults } from '../../Services/dataServices';
 interface SearchResult {
   id: number;
   name: string;
-  image: any;
+  image: {
+    medium: string;
+  }
 }
 function SearchResults() {
   const location = useLocation();
@@ -52,7 +54,7 @@ function SearchResults() {
                   component="img"
                   alt={result.name}
                   height="300"
-                  image={result.image.medium}
+                  image={result.image?.medium}
                 />
                 <CardContent>
                   <Typography variant="h6" component="div">
