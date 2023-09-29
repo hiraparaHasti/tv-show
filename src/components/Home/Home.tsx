@@ -147,43 +147,21 @@ const Home: React.FC<HomeProps> = (props) => {
   }
 
   const toggleFavorite = (showId: number) => {
-    if (favorites?.includes(showId)) {
-      setFavorites((prevFavorites) =>
-        prevFavorites.filter((id) => id !== showId)
-      );
-      props.updateFavoritesCount(favorites.length - 1);
+    let updatedFavorites = [...(favorites || [])];
+  
+    if (updatedFavorites.includes(showId)) {
+      updatedFavorites = updatedFavorites.filter((id) => id !== showId);
       toast.info("Remove from favorite cart!");
       removeFavorite(showId);
     } else {
-      setFavorites((prevFavorites) => [...prevFavorites, showId]);
-      props.updateFavoritesCount(favorites.length + 1);
+      updatedFavorites.push(showId);
       toast.success("Added to favorite cart!");
-
       addFavorite(showId);
     }
-
-    // const loggedInUserEmail = localStorage.getItem('loginUser');
-    // if (loggedInUserEmail) {
-    //   const storedData = localStorage.getItem('loginData');
-    //   if (storedData) {
-    //     const existingData: UserData[] = JSON.parse(storedData);
-    //     const userData = existingData.find((user) => user.email === loggedInUserEmail);
-    //     if (userData) {
-    //       if (!userData.favoriteShowIds) {
-    //         userData.favoriteShowIds = [];
-    //       }
-
-    //       if (favorites?.includes(showId)) {
-    //         userData.favoriteShowIds = userData.favoriteShowIds.filter((id) => id !== showId);
-    //       } else {
-    //         userData.favoriteShowIds.push(showId);
-    //       }
-
-    //       localStorage.setItem('loginData', JSON.stringify(existingData));
-    //     }
-    //   }
-    // }
-
+  
+    setFavorites(updatedFavorites);
+    props.updateFavoritesCount(updatedFavorites.length);
+  
     const loggedInUserEmail = getDataFromLocalStorage("loginUser");
     if (loggedInUserEmail) {
       const storedData = getDataFromLocalStorage("loginData");
@@ -210,7 +188,7 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     }
   };
-
+  
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
