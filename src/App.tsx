@@ -22,7 +22,6 @@ const App: React.FC = () => {
       <FavoritesProvider>
         <SortFilterProvider >
           <Navbar favoritesCount={favoritesCount} />
-          <button>Test</button>
             <Routes>
             <Route path='/' element={<Login/>}></Route>
             <Route path='/Home' element={<Home updateFavoritesCount={updateFavoritesCount}/>}></Route>
