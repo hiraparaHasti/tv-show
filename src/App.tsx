@@ -21,7 +21,8 @@ const App: React.FC = () => {
     <BrowserRouter>
       <FavoritesProvider>
         <SortFilterProvider >
-            <Navbar favoritesCount={favoritesCount} />
+          <Navbar favoritesCount={favoritesCount} />
+          <button>Test</button>
             <Routes>
             <Route path='/' element={<Login/>}></Route>
             <Route path='/Home' element={<Home updateFavoritesCount={updateFavoritesCount}/>}></Route>
