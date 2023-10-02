@@ -76,7 +76,7 @@ const Details = () => {
         </Typography>
       <CardMedia component="img" alt={showDetails.name}  src={showDetails.image.medium} style={{width: "269px",marginTop: "27px",marginLeft: "58px"}}/>
       <CardContent style={{marginLeft:"341px",marginTop:"-355px"}}>
-        <Typography variant="h2" component="div">
+        <Typography variant="h4" component="div" style={{fontWeight:900}}>
           {showDetails.name}
         </Typography>
           <Typography variant="body1" dangerouslySetInnerHTML={{ __html: showDetails.summary }} />
