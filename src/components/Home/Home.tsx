@@ -27,6 +27,7 @@ import {
 import { RotatingLines } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {useTheme  } from '../../Context/ThemeContext';
 
 interface Show {
   name: string;
@@ -47,33 +48,22 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = (props) => {
-  // const url = 'https://api.tvmaze.com/shows';
   const [data, setData] = useState<Show[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
   const { addFavorite, removeFavorite } = useFavorites();
-  const { sortOption, filterOptions, setSortOption, setFilterOptions } =
-    useSortFilter();
+  const { sortOption, filterOptions, setSortOption, setFilterOptions } = useSortFilter();
+  // console.log('soertOption', sortOption);
+  // console.log('filterOptions', filterOptions);
   const [loading, setLoading] = useState(true);
+  // console.log('loading', loading);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showsPerPage] = useState(10);
   console.log("showsPerPage", showsPerPage);
+  const { theme } = useTheme();
+  // console.log('theme', theme);
 
-  // const fetchInfo = () => {
-  //   return axios
-  //     .get(url)
-  //     .then((response) => {
-  //       const data = response.data;
-  //       setData(data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching data:', error);
-  //       setError('Error fetching data. Please try again later.');
-  //       setLoading(false);
 
-  //     });
-  // };
   const fetchInfo = () => {
     return api
       .fetchAllShows()
@@ -88,22 +78,7 @@ const Home: React.FC<HomeProps> = (props) => {
         setLoading(false);
       });
   };
-  // useEffect(() => {
-  //   fetchInfo();
-
-  //   const loggedInUserEmail = localStorage.getItem('loginUser');
-  //   if (loggedInUserEmail) {
-  //     const storedData = localStorage.getItem('loginData');
-  //     if (storedData) {
-  //       const existingData: UserData[] = JSON.parse(storedData);
-  //       const userData = existingData.find((user) => user.email === loggedInUserEmail);
-  //       if (userData) {
-  //         setFavorites(userData.favoriteShowIds);
-  //       }
-  //     }
-  //   }
-  // }, []);
-
+  
   useEffect(() => {
     fetchInfo();
 
@@ -112,6 +87,7 @@ const Home: React.FC<HomeProps> = (props) => {
       const storedData = getDataFromLocalStorage("loginData");
       if (storedData) {
         const existingData: UserData[] = storedData;
+        // console.log('existingData', existingData);
         const userData = existingData.find(
           (user) => user.email === loggedInUserEmail
         );
@@ -130,6 +106,7 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   let sortedData = [...data];
+  // console.log('sortedData', sortedData);
   if (sortOption === SortOption.NAME_ASC) {
     sortedData = sortedData.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortOption === SortOption.NAME_DESC) {
@@ -200,6 +177,7 @@ const Home: React.FC<HomeProps> = (props) => {
   const showsToShow = sortedData.slice(indexOfFirstShow, indexOfLastShow);
 
   return (
+    <div style={{background: theme === 'dark' ? '#121212' : 'white'}}>
     <Container maxWidth="md">
       <CssBaseline />
       <ToastContainer
@@ -214,7 +192,7 @@ const Home: React.FC<HomeProps> = (props) => {
         pauseOnHover
         theme="light"
       />
-      <Container style={{ marginTop: "323px", marginLeft: "-31px" }}>
+      <Container style={{ position:"relative", top:"309px", marginLeft: "-31px"}}>
         <Typography
           style={{
             marginLeft: "1033px",
@@ -237,11 +215,12 @@ const Home: React.FC<HomeProps> = (props) => {
               fontWeight: "700",
               color: "blue",
             }}
-          >
+            >
+              <hr style={{marginTop:"-22px"}}/>
             Rating:
           </Typography>
           <FormControl
-            style={{ width: "130px", marginLeft: "1010px", marginTop: "59px" }}
+            style={{ width: "130px", marginLeft: "1010px", marginTop: "59px",border:"2px solid aliceblue",background:"white" }}
           >
             <Select
               labelId="demo-simple-select-label"
@@ -278,7 +257,7 @@ const Home: React.FC<HomeProps> = (props) => {
           </Typography>
 
           <FormControl
-            style={{ width: "130px", marginLeft: "1010px", marginTop: "59px" }}
+            style={{ width: "130px", marginLeft: "1010px", marginTop: "59px",border:"2px solid aliceblue",background:"white" }}
           >
             <Select
               labelId="demo-simple-select-label"
@@ -297,7 +276,7 @@ const Home: React.FC<HomeProps> = (props) => {
           </FormControl>
         </Box>
       </Container>
-      <Container style={{ marginTop: "-415px", marginLeft: "-60px" }}>
+      <Container style={{ marginTop: "-85px", marginLeft: "-60px" }}>
         <Typography
           variant="h5"
           component="div"
@@ -416,10 +395,12 @@ const Home: React.FC<HomeProps> = (props) => {
           page={currentPage}
           onChange={handlePageChange}
           color="primary"
+          sx={{ '& .MuiPaginationItem-page': { color: 'red' } ,'& .MuiPaginationItem-page.Mui-selected': { color: 'white' }}}
           style={{ marginTop: "20px", alignSelf: "center" }}
         />
       </Container>
-    </Container>
+      </Container>
+      </div>
   );
 };
 export default Home;

@@ -22,6 +22,7 @@ import {
   deleteDataFromLocalStorage,
   getDataFromLocalStorage,
 } from "../../utils/LocalStorageUtils";
+import {useTheme  } from '../../Context/ThemeContext';
 
 const darkTheme = createTheme({
   palette: {
@@ -46,7 +47,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  // const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const { theme, toggleTheme } = useTheme();
+
   const [userData, setUserData] = useState<string | null>(null);
   // console.log('userData', userData);
   const navigate = useNavigate();
@@ -82,17 +85,17 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
     navigate("/user");
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode((prevMode) => !prevMode);
+  // const toggleTheme = () => {
+  //   setIsDarkMode((prevMode) => !prevMode);
     
-  };
+  // };
   const handleIcon = () => {
     setSearchQuery("");
     navigate("/favorite");
   };
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Container>
         <CssBaseline />
         {userData ? (
@@ -122,6 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
                 variant="outlined"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                InputProps={{style:{color:"red"}}}
                 style={{
                   background: "white",
                   marginBottom: "7px",
@@ -132,7 +136,7 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
                   borderRadius: "10px",
                 }}
               />
-              <Button onClick={handleSearch} style={{ marginRight: "526px" }}>
+              <Button onClick={handleSearch} style={{ marginRight: "526px",color:"blue" }}>
                 <SearchIcon />
               </Button>
               <Button onClick={handleShow} style={{ color: "white" }}>
@@ -151,9 +155,9 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
                   />
                 </Badge>
               </Tooltip>
-              <Tooltip title={isDarkMode ? "Light Mode" : "Dark Mode"}>
+              <Tooltip title={theme ? "Light Mode" : "Dark Mode"}>
                 <Button onClick={toggleTheme} style={{ color: "white" }}>
-                  {isDarkMode ? <BrightnessLowIcon /> : <Brightness4Icon />}
+                {theme === 'dark' ? <BrightnessLowIcon /> : <Brightness4Icon />}
                 </Button>
               </Tooltip>
               <Button style={{ color: "#77ed08" }} onClick={handleLogout}>
