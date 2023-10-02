@@ -82,7 +82,7 @@ const Details = () => {
           <Typography variant="body1" dangerouslySetInnerHTML={{ __html: showDetails.summary }} />
           
       </CardContent>
-      <Card style={{borderRadius: 2,width: "438px",boxShadow: "0 2px 4px black",height:"325px",position:"fixed", marginLeft:"1180px",top:"290px"}}>
+      <Card style={{borderRadius: 2,width: "438px",boxShadow: "0 2px 4px black",height:"354px",position:"fixed", marginLeft:"1180px",top:"290px"}}>
         <CardContent>
         <Typography variant="h4" component="div" style={{textAlign:"center", color:"blue",fontFamily:"auto", fontWeight:600}}>
           Show Info
