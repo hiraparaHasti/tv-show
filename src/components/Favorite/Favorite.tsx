@@ -52,10 +52,8 @@ const Favorite: React.FC = () => {
     <Typography variant="h4" style={{ marginTop: "153px", color: "darkcyan", textShadow: "2px 7px 3px black", fontSize: "40px", fontFamily: "fantasy" }}>Favorite Show</Typography>
     <Grid container spacing={6} style={{ marginTop: "-16px" }}>
       {favoriteShows.length === 0 ? (
-        // Display a message when there are no favorite shows
         <Typography variant="body1" style={{marginTop:"108px", marginLeft:"439px", fontSize:"30px",color:"red",fontFamily:"monospace",fontWeight:700}}>You have no favorite shows.</Typography>
       ) : (
-        // Render favorite shows if there are any
         favoriteShows.map((show) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={show.id}>
             <Card>
