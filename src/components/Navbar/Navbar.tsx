@@ -18,6 +18,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import BrightnessLowIcon from "@mui/icons-material/BrightnessLow";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  deleteDataFromLocalStorage,
+  getDataFromLocalStorage,
+} from "../../utils/LocalStorageUtils";
 
 const darkTheme = createTheme({
   palette: {
@@ -49,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const userLoginData = localStorage.getItem("loginUser");
+    const userLoginData = getDataFromLocalStorage("loginUser");
     setUserData(userLoginData);
   }, []);
 
@@ -69,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
   };
   const handleLogout = () => {
     setUserData(null);
-    localStorage.removeItem("loginUser");
+    deleteDataFromLocalStorage("loginUser");
     navigate("/");
   };
 
@@ -80,6 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
+    
   };
   const handleIcon = () => {
     setSearchQuery("");

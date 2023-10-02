@@ -422,5 +422,4 @@ const Home: React.FC<HomeProps> = (props) => {
     </Container>
   );
 };
-
 export default Home;
