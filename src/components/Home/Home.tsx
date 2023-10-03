@@ -223,8 +223,6 @@ const Home: React.FC<HomeProps> = (props) => {
             style={{ width: "130px", marginLeft: "1010px", marginTop: "59px",border:"2px solid aliceblue",background:"white" }}
           >
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={filterOptions.rating.toString()}
               onChange={handleFilterChange}
             >
@@ -260,8 +258,6 @@ const Home: React.FC<HomeProps> = (props) => {
             style={{ width: "130px", marginLeft: "1010px", marginTop: "59px",border:"2px solid aliceblue",background:"white" }}
           >
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
               value={sortOption}
               onChange={handleSortChange}
             >
