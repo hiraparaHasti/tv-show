@@ -26,6 +26,7 @@ interface UserData {
 const Favorite: React.FC = () => {
   const { favorites } = useFavorites();
   const [favoriteShows, setFavoriteShows] = useState<Show[]>([]);
+// console.log('favoriteShows', favoriteShows);
 
   useEffect(() => {
     const loggedInUserEmail = getDataFromLocalStorage("loginUser");
@@ -33,6 +34,7 @@ const Favorite: React.FC = () => {
       const storedData = getDataFromLocalStorage("loginData");
       if (storedData) {
         const existingData: UserData[] = storedData;
+        // console.log('existingData', existingData);
         const userData = existingData.find(
           (user) => user.email === loggedInUserEmail
         );

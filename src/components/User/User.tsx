@@ -16,36 +16,23 @@ import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/Loca
 
 const User: React.FC = () => {
   const [userData, setUserData] = useState<{ email: string; password: string }[]>([]);
-
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem('loginData');
-  //   const existingData = storedData ? JSON.parse(storedData) : [];
-  //   setUserData(existingData);
-  // }, []);
+// console.log('userData', userData);
 
   useEffect(() => {
     const existingData = getDataFromLocalStorage('loginData');
     setUserData(existingData);
   }, []);
 
-  // const handleDeleteUser = (index: number) => {
-  //   const updatedData = [...userData];
-  //   updatedData.splice(index, 1); 
-  //   setUserData(updatedData); 
-  //   localStorage.setItem('loginData', JSON.stringify(updatedData)); 
-  // };
-  
+ 
   
   const handleDeleteUser = (index: number) => {
     const updatedData = [...userData];
+    // console.log('updatedData', updatedData);
     updatedData.splice(index, 1);
     setUserData(updatedData);
     setDataToLocalStorage('loginData', updatedData);
   };
 
-  
-  
-  
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" align="center" mt={30} style={{marginBottom:"35px", color:" darkcyan",textShadow:"2px 7px 3px black",fontSize:"40px", fontFamily:"fantasy"}}>
@@ -69,7 +56,6 @@ const User: React.FC = () => {
                       onClick={() => handleDeleteUser(index)}
                       style={{ color: 'red' }}
                     />
-
                   </TableCell>
                 </TableRow>
               ))}

@@ -125,7 +125,7 @@ const Home: React.FC<HomeProps> = (props) => {
 
   const toggleFavorite = (showId: number) => {
     let updatedFavorites = [...(favorites || [])];
-  
+  // console.log('updatedFavorites', updatedFavorites);
     if (updatedFavorites.includes(showId)) {
       updatedFavorites = updatedFavorites.filter((id) => id !== showId);
       toast.info("Remove from favorite cart!");

@@ -41,7 +41,8 @@ interface ShowDetails {
 const Details = () => {
   const { showId } = useParams();
   const [showDetails, setShowDetails] = useState<ShowDetails | null>(null);
-
+  // console.log('showDetails', showDetails);
+  
   // useEffect(() => {
   //   const url = `https://api.tvmaze.com/shows/${showId}`;
   //   axios.get(url)
