@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Container,
@@ -9,52 +9,84 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { getDataFromLocalStorage, setDataToLocalStorage } from '../../utils/LocalStorageUtils';
-
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  getDataFromLocalStorage,
+  setDataToLocalStorage,
+} from "../../utils/LocalStorageUtils";
 
 const User: React.FC = () => {
-  const [userData, setUserData] = useState<{ email: string; password: string }[]>([]);
-// console.log('userData', userData);
+  const [userData, setUserData] = useState<{ [key: string]: string }[]>([]);
 
   useEffect(() => {
-    const existingData = getDataFromLocalStorage('loginData');
+    const existingData = getDataFromLocalStorage("loginData");
     setUserData(existingData);
   }, []);
 
- 
-  
   const handleDeleteUser = (index: number) => {
     const updatedData = [...userData];
-    // console.log('updatedData', updatedData);
     updatedData.splice(index, 1);
     setUserData(updatedData);
-    setDataToLocalStorage('loginData', updatedData);
+    setDataToLocalStorage("loginData", updatedData);
   };
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" align="center" mt={30} style={{marginBottom:"35px", color:" darkcyan",textShadow:"2px 7px 3px black",fontSize:"40px", fontFamily:"fantasy"}}>
+      <Typography
+        variant="h4"
+        align="center"
+        mt={30}
+        style={{
+          marginBottom: "35px",
+          color: " darkcyan",
+          textShadow: "2px 7px 3px black",
+          fontSize: "40px",
+          fontFamily: "fantasy",
+        }}
+      >
         Users
       </Typography>
       {userData.length > 0 ? (
-        <TableContainer component={Paper} style={{ border: "1px solid black", boxShadow:"0px 6px 10px #0f636f",textAlign:"center"}}>
+        <TableContainer
+          component={Paper}
+          style={{
+            border: "1px solid black",
+            boxShadow: "0px 6px 10px #0f636f",
+            textAlign: "center",
+          }}
+        >
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{fontSize:"21px", color:"blue", fontFamily:"monospace"}}>Email</TableCell>
-                <TableCell style={{fontSize:"21px", color:"blue", fontFamily:"monospace"}}>Action</TableCell>
+                <TableCell
+                  style={{
+                    fontSize: "21px",
+                    color: "blue",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  Email
+                </TableCell>
+                <TableCell
+                  style={{
+                    fontSize: "21px",
+                    color: "blue",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {userData.map((user, index) => (
                 <TableRow key={index}>
-                  <TableCell style={{color:"red"}}>{user.email}</TableCell>
+                  <TableCell style={{ color: "red" }}>{user.email}</TableCell>
                   <TableCell>
-                  <DeleteIcon
+                    <DeleteIcon
                       onClick={() => handleDeleteUser(index)}
-                      style={{ color: 'red' }}
+                      style={{ color: "red" }}
                     />
                   </TableCell>
                 </TableRow>
@@ -65,7 +97,6 @@ const User: React.FC = () => {
       ) : (
         <Typography variant="body1">User data not found.</Typography>
       )}
-      
     </Container>
   );
 };

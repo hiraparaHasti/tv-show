@@ -8,9 +8,7 @@ import {
   Grid,
   Container,
 } from "@mui/material";
-// import axios from 'axios';
 import { fetchAllShows } from "../../Services/dataServices";
-import { getDataFromLocalStorage } from "../../utils/LocalStorageUtils";
 
 interface Show {
   id: number;
@@ -19,42 +17,22 @@ interface Show {
     medium: string;
   };
 }
-interface UserData {
-  email: string;
-  favoriteShowIds: number[];
-}
+
 const Favorite: React.FC = () => {
   const { favorites } = useFavorites();
   const [favoriteShows, setFavoriteShows] = useState<Show[]>([]);
-// console.log('favoriteShows', favoriteShows);
 
   useEffect(() => {
-    const loggedInUserEmail = getDataFromLocalStorage("loginUser");
-    if (loggedInUserEmail) {
-      const storedData = getDataFromLocalStorage("loginData");
-      if (storedData) {
-        const existingData: UserData[] = storedData;
-        // console.log('existingData', existingData);
-        const userData = existingData.find(
-          (user) => user.email === loggedInUserEmail
+    fetchAllShows()
+      .then((data) => {
+        const favoriteShowsInFavorites = data.filter((show: Show) =>
+          favorites.includes(show.id)
         );
-        // console.log('userData', userData);
-        if (userData && userData.favoriteShowIds) {
-          const favoriteShowIds = userData.favoriteShowIds;
-
-          fetchAllShows()
-            .then((data) => {
-              const favoriteShowsInFavorites = data.filter((show: Show) =>
-                favoriteShowIds.includes(show.id)
-              );
-              setFavoriteShows(favoriteShowsInFavorites);
-            })
-            .catch((error) => {
-              console.error("Error fetching data:", error);
-            });
-        }
-      }
-    }
+        setFavoriteShows(favoriteShowsInFavorites);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
 
   return (

@@ -18,32 +18,6 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
-  //   const handleLogin = () => {
-  //     const storedData = localStorage.getItem('loginData');
-  //     const existingData: UserData[] = storedData ? JSON.parse(storedData) : [];
-  //     // console.log('existingData', existingData);
-  //     const userExists = existingData.some((userData) => userData.email === email);
-  // // console.log('userExists', userExists);
-  //     if (!userExists) {
-  //       const newLoginData = {
-  //         id: uuidv4(),
-  //         email,
-  //         password,
-  //       };
-
-  //       existingData.push(newLoginData);
-  //       localStorage.setItem('loginData', JSON.stringify(existingData));
-  //     }
-  //     if (email.trim() === '') {
-  //       return;
-  //     }
-  //     localStorage.setItem('loginUser', email);
-
-  //     navigate('/Home');
-  //     window.location.reload();
-  //   };
-
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   const handleLogin = () => {

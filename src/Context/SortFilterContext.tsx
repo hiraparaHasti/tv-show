@@ -1,11 +1,11 @@
 // SortFilterContext.tsx
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 export enum SortOption {
-  NAME_ASC = 'name_asc',
-  NAME_DESC = 'name_desc',
-  RATING_ASC = 'rating_asc',
-  RATING_DESC = 'rating_desc',
+  NAME_ASC = "name_asc",
+  NAME_DESC = "name_desc",
+  RATING_ASC = "rating_asc",
+  RATING_DESC = "rating_desc",
 }
 
 export interface FilterOptions {
@@ -19,12 +19,14 @@ interface SortFilterContextProps {
   setFilterOptions: (options: FilterOptions) => void;
 }
 
-const SortFilterContext = createContext<SortFilterContextProps | undefined>(undefined);
+const SortFilterContext = createContext<SortFilterContextProps | undefined>(
+  undefined
+);
 
 export function useSortFilter() {
   const context = useContext(SortFilterContext);
   if (!context) {
-    throw new Error('useSortFilter must be used within a SortFilterProvider');
+    throw new Error("useSortFilter must be used within a SortFilterProvider");
   }
   return context;
 }
@@ -40,7 +42,9 @@ export function SortFilterProvider({ children }: SortFilterProviderProps) {
   });
 
   return (
-    <SortFilterContext.Provider value={{ sortOption, filterOptions, setSortOption, setFilterOptions }}>
+    <SortFilterContext.Provider
+      value={{ sortOption, filterOptions, setSortOption, setFilterOptions }}
+    >
       {children}
     </SortFilterContext.Provider>
   );

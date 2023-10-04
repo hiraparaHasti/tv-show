@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface ThemeContextType {
   theme: string;
@@ -6,12 +6,12 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: "light",
   toggleTheme: () => {},
 });
 
 interface ThemeProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 export function useTheme() {
@@ -20,13 +20,13 @@ export function useTheme() {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-// console.log('isDarkMode', isDarkMode);
+  // console.log('isDarkMode', isDarkMode);
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-    const theme = isDarkMode ? 'dark' : 'light';
-    // console.log('theme', theme);
+  const theme = isDarkMode ? "dark" : "light";
+  // console.log('theme', theme);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

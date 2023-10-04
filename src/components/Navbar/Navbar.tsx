@@ -22,8 +22,8 @@ import {
   deleteDataFromLocalStorage,
   getDataFromLocalStorage,
 } from "../../utils/LocalStorageUtils";
-import {useTheme  } from '../../Context/ThemeContext';
-
+import { useTheme } from "../../Context/ThemeContext";
+import { useFavorites } from "../../Context/FavoritesContext";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -41,17 +41,12 @@ const lightTheme = createTheme({
     },
   },
 });
-interface NavbarProps {
-  favoritesCount: number;
-}
 
-const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
+const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  // const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const { theme, toggleTheme } = useTheme();
-
+  const { favorites } = useFavorites();
   const [userData, setUserData] = useState<string | null>(null);
-  // console.log('userData', userData);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -60,19 +55,8 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
     setUserData(userLoginData);
   }, []);
 
-  const isLoginRoute = location.pathname === "/";
-
-  if (isLoginRoute) {
-    return null;
-  }
-
   const handleSearch = () => {
-    // navigate(`/search-results?query=${searchQuery}`);
     navigate(`/search-results?query=${encodeURIComponent(searchQuery)}`);
-  };
-  const handleShow = () => {
-    setSearchQuery("");
-    navigate("/Home");
   };
   const handleLogout = () => {
     setUserData(null);
@@ -80,93 +64,101 @@ const Navbar: React.FC<NavbarProps> = ({ favoritesCount }) => {
     navigate("/");
   };
 
-  const handleUser = () => {
+  const handleChangeRoute = (key: string) => {
     setSearchQuery("");
-    navigate("/user");
+    navigate(`/${key}`);
   };
 
-  // const toggleTheme = () => {
-  //   setIsDarkMode((prevMode) => !prevMode);
-    
-  // };
-  const handleIcon = () => {
-    setSearchQuery("");
-    navigate("/favorite");
-  };
+  const isLoginRoute = location.pathname === "/";
 
   return (
-    <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
-      <Container>
-        <CssBaseline />
-        {userData ? (
-          <AppBar
-            style={{
-              backgroundColor: "#0f636f",
-              boxShadow: "0px 8px 10px black",
-            }}
-          >
-            <Toolbar>
-              <Typography
-                variant="h5"
-                component="div"
-                sx={{ flexGrow: 1 }}
-                style={{
-                  color: "white",
-                  marginLeft: 40,
-                  fontFamily: "math",
-                  fontWeight: 900,
-                  fontSize: "33px",
-                }}
-              >
-                Tv Show
-              </Typography>
-              <TextField
-                placeholder="Search"
-                variant="outlined"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                InputProps={{style:{color:"red"}}}
-                style={{
-                  background: "white",
-                  marginBottom: "7px",
-                  width: "454px",
-                  marginTop: "10px",
-                  marginRight: "-67px",
-                  border: "2px solid black",
-                  borderRadius: "10px",
-                }}
-              />
-              <Button onClick={handleSearch} style={{ marginRight: "526px",color:"blue" }}>
-                <SearchIcon />
-              </Button>
-              <Button onClick={handleShow} style={{ color: "white" }}>
-                Show
-              </Button>
-              <Tooltip title="Account">
-                <Button onClick={handleUser} style={{ color: "white" }}>
-                  <AccountCircleIcon />
+    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      {!isLoginRoute && (
+        <Container>
+          <CssBaseline />
+          {userData ? (
+            <AppBar
+              style={{
+                backgroundColor: "#0f636f",
+                boxShadow: "0px 8px 10px black",
+              }}
+            >
+              <Toolbar>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ flexGrow: 1 }}
+                  style={{
+                    color: "white",
+                    marginLeft: 40,
+                    fontFamily: "math",
+                    fontWeight: 900,
+                    fontSize: "33px",
+                  }}
+                >
+                  Tv Show
+                </Typography>
+                <TextField
+                  placeholder="Search"
+                  variant="outlined"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  InputProps={{ style: { color: "red" } }}
+                  style={{
+                    background: "white",
+                    marginBottom: "7px",
+                    width: "454px",
+                    marginTop: "10px",
+                    marginRight: "-67px",
+                    border: "2px solid black",
+                    borderRadius: "10px",
+                  }}
+                />
+                <Button
+                  onClick={handleSearch}
+                  style={{ marginRight: "526px", color: "blue" }}
+                >
+                  <SearchIcon />
                 </Button>
-              </Tooltip>
-              <Tooltip title="Favorites">
-                <Badge badgeContent={favoritesCount} color="error">
-                  <FavoriteIcon
-                    style={{ fontSize: "27px", color: "white" }}
-                    onClick={handleIcon}
-                  />
-                </Badge>
-              </Tooltip>
-              <Tooltip title={theme ? "Light Mode" : "Dark Mode"}>
-                <Button onClick={toggleTheme} style={{ color: "white" }}>
-                {theme === 'dark' ? <BrightnessLowIcon /> : <Brightness4Icon />}
+                <Button
+                  onClick={() => handleChangeRoute("Home")}
+                  style={{ color: "white" }}
+                >
+                  Show
                 </Button>
-              </Tooltip>
-              <Button style={{ color: "#77ed08" }} onClick={handleLogout}>
-                Logout
-              </Button>
-            </Toolbar>
-          </AppBar>
-        ) : null}
-      </Container>
+                <Tooltip title="Account">
+                  <Button
+                    onClick={() => handleChangeRoute("user")}
+                    style={{ color: "white" }}
+                  >
+                    <AccountCircleIcon />
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Favorites">
+                  <Badge badgeContent={favorites.length} color="error">
+                    <FavoriteIcon
+                      style={{ fontSize: "27px", color: "white" }}
+                      onClick={() => handleChangeRoute("favorite")}
+                    />
+                  </Badge>
+                </Tooltip>
+                <Tooltip title={theme ? "Light Mode" : "Dark Mode"}>
+                  <Button onClick={toggleTheme} style={{ color: "white" }}>
+                    {theme === "dark" ? (
+                      <BrightnessLowIcon />
+                    ) : (
+                      <Brightness4Icon />
+                    )}
+                  </Button>
+                </Tooltip>
+                <Button style={{ color: "#77ed08" }} onClick={handleLogout}>
+                  Logout
+                </Button>
+              </Toolbar>
+            </AppBar>
+          ) : null}
+        </Container>
+      )}
     </ThemeProvider>
   );
 };
