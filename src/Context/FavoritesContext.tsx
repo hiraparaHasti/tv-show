@@ -61,7 +61,7 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
     if (storedFavorites) {
       setFavorites(storedFavorites);
     }
-  }, []);
+  }, [loggedInUserEmail]);
 
   return (
     <FavoritesContext.Provider

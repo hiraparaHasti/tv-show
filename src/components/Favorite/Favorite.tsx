@@ -33,7 +33,7 @@ const Favorite: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [favorites]);
 
   return (
     <Container maxWidth="lg">
