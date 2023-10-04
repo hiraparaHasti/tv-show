@@ -20,13 +20,11 @@ export function useTheme() {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  // console.log('isDarkMode', isDarkMode);
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
   const theme = isDarkMode ? "dark" : "light";
-  // console.log('theme', theme);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
