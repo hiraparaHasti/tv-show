@@ -137,6 +137,9 @@ const Home: React.FC = () => {
           >
             Filter
           </Typography>
+          <hr
+            style={{ marginTop: "-22px", width: "100px", marginLeft: "1015px" }}
+          />
           <Box>
             <Typography
               style={{
@@ -148,7 +151,6 @@ const Home: React.FC = () => {
                 color: "blue",
               }}
             >
-              <hr style={{ marginTop: "-22px" }} />
               Rating:
             </Typography>
             <FormControl
